@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="./build/react.js"></script>
+    <script src="./build/react-dom.js"></script>
+    <script src="./build/browser.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+<script type="text/babel">
+    // ** Our code goes here! **
+
+    var MyTitle = React.createClass({
+        // 验证组件属性的类型
+        propTypes: {
+            title: React.PropTypes.string.isRequired,  // title为string类型且不能为空
+            age: React.PropTypes.number.isRequired,    // age为number类型且不能为空
+        },
+
+        // 为组件属性设置默认值
+        getDefaultProps: function() {
+            return {
+                title: "default value",
+                age: 18
+            };
+        },
+
+        render: function() {
+            return <h1> {this.props.title} -- {this.props.age} </h1>;
+        }
+    });
+
+
+    var data = "aaabbbccc";
+    var age  = 23;
+
+    ReactDOM.render(
+            <MyTitle title={data} age={age} />,
+            // <MyTitle />,
+            document.body
+    );
+
+
+</script>
+</body>
+</html>

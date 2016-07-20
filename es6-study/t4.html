@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>es6 函数扩展</title>
+</head>
+<body>
+
+<script src="../build/browser.min.js"></script>
+<script type="text/babel">
+    // Your ES6 code
+
+
+    // 参数默认值
+    function fun1(name, age = 18) {
+        document.writeln(name + " : " + age);
+    }
+
+    fun1('stefan');
+
+
+    // 结合解构赋值使用
+    function fun2({x, y = 5}) {
+        document.writeln(x + y);
+    }
+
+    fun2({x: 5});
+
+
+
+    // 双重默认值
+    function fun3(url, {body = '', method = 'GET', headers = {}} = {}) {
+        document.writeln(method);
+    }
+
+    fun3('http://www.baidu.com');
+    fun3('http://www.baidu.com', {});
+
+
+
+    // 比较下面两个函数的区别
+    function m1({x = 0, y = 0} = {}) {  // x y无论如何都有值
+        return [x, y];
+    }
+    function m2({x, y} = {x: 0, y: 0}) {
+        return [x, y];
+    }
+
+
+
+
+    // 默认参数最好是都放到参数列表的末尾
+    function fun4(x = 3, y, z = 5) {
+        document.writeln(x + "-" + y + "-" + z);
+    }
+
+    fun4(undefined, 4);
+
+
+
+    // 变量作用域
+    let a = 5;
+    function fun5() {
+        let a = 6;
+        // 如果函数内部定义了变量a  则使用函数内部定义的变量a
+        // 如果函数内部没有定义变量a 则使用函数外部定义的变量a
+        document.writeln(a);
+    }
+    fun5();
+
+
+
+
+    // 箭头函数
+    let fun6 = (a, b, c) => {
+        let d = a + b + c;
+        return d;
+    };
+    document.writeln(fun6(1, 8, 3));
+
+
+
+    // rest参数 用于获取函数的多余参数
+    function fun7(a, b, ...paras) {
+        let sum = 0;
+        for (var para of paras) {
+            sum += para;
+        }
+        return (a + b) * sum;
+    }
+
+    document.writeln(fun7(4, 6, 1, 2, 3));
+
+
+
+    let fun8 = (...args) => args.sort();
+    console.log(fun8(3, 6, 2, 1, 8, 5));
+
+
+
+    let arr1 = [3, 4, 5];
+    // 运算符"..."将一个数组，变为参数序列
+    document.writeln(fun7(...arr1));
+
+
+
+
+    // 数组合并
+    let arr2 = [10, 20, 30, 40];
+    arr2.push(...arr1)
+    console.log(arr2);
+
+
+
+    // 快速赋值
+    let [n1, n2, ...nn] = [1, 2, 3, 4, 5];
+    console.log(nn);
+
+
+    // 分解字符串
+    let arr3 = [..."stefan"];
+    console.log(arr3);
+
+
+
+    var nodeList = document.querySelectorAll('div');
+    var arr4 = [...nodeList];
+    console.log(arr4);
+
+
+
+    // 转化"类数组的对象"为真正的数组
+    let arrayLike1 = {
+        '0': 'a',
+        '1': 'b',
+        '2': 'c',
+        length: 3
+    };
+
+    let arr5 = [...arrayLike1];
+    console.log(arr5);
+    console.log(arr5[1]);
+
+
+
+
+
+    // 箭头函数的一个用处是简化回调函数
+    [1,2,3].map(function (x) {
+        return x * x;
+    });
+    // 简化版回调函数
+    [1,2,3].map(x => x * x);
+
+
+    // 箭头函数结合rest参数
+    const headAndTail = (head, ...tail) => [head, tail];
+
+    headAndTail(1, 2, 3, 4, 5);   // [1,[2,3,4,5]]
+
+
+
+
+
+
+
+    var thisid = 'out';
+
+    // 箭头函数和普通函数 this对象的差别  (箭头函数可以让this指向固定化，这种特性很有利于封装回调函数)
+    function fun9() {
+        console.log(this.thisid);
+        setTimeout(() => {
+            console.log(this.thisid);
+        }, 100);
+    }
+    fun9.call({thisid: 'in1'});
+//    fun9();   // 报错  未定义属性thisid
+
+
+    function fun10() {
+//        console.log(this.thisid);
+        setTimeout(function () {
+            console.log(this.thisid)
+        }, 100);
+    }
+    fun10.call({thisid: 'in2'});
+
+//    console.log("--" + this.thisid);  // 报错 未定义属性thisid
+
+
+
+
+
+    // 箭头函数和普通函数 this对象上下文的区别
+    function Timer() {
+        this.s1 = 0;
+        this.s2 = 0;
+        setInterval(() => this.s1++, 1000);
+
+        setInterval(function () {
+            this.s2++;
+        }, 1000);
+    }
+
+    var timer = new Timer();
+    setTimeout(() => console.log('s1: ', timer.s1), 3100);  // s1: 3
+    setTimeout(() => console.log('s2: ', timer.s2), 3100);  // s2: 0
+
+
+
+
+
+    // 普通递归实现
+    function factorial(n) {
+        if (n === 1) return 1;
+        return n * factorial(n - 1);
+    }
+    // 尾递归实现  (复杂度更低 内存占用更少 降低栈溢出的风险)
+    function factorial2(n, total) {
+        if (n === 1) return total;
+        return factorial2(n - 1, n * total);
+    }
+
+    console.log(factorial(5));
+    console.log(factorial2(5, 1));
+
+
+
+
+
+    function Fibonacci(n) {
+        if (n <= 1) return 1;
+        return Fibonacci(n - 1) + Fibonacci(n - 2);
+    }
+
+    Fibonacci(10);  // 89
+//    Fibonacci(100);   // 报错 堆栈溢出
+
+
+    // 使用尾递归优化过的fibonacci递归算法
+    function Fibonacci2(n, ac1 = 1, ac2 = 1) {
+        if( n <= 1 ) return ac1;
+        return Fibonacci2(n - 1, ac2, ac1 + ac2);
+    }
+
+    console.log(Fibonacci2(100));    // 354224848179262000000
+    console.log(Fibonacci2(1000));   // 4.346655768693743e+208
+    console.log(Fibonacci2(10000));  // Infinity
+
+    // 结论: 在ES6中，只要使用尾递归，就不会发生栈溢出，相对节省内存
+
+</script>
+
+
+<div><div></div></div>
+<div></div>
+
+</body>
+</html>

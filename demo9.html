@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <script src="./build/react.js"></script>
+    <script src="./build/react-dom.js"></script>
+    <script src="./build/browser.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+<script type="text/babel">
+    // ** Our code goes here! **
+
+    var Input = React.createClass({
+        // 设置初始化状态
+        getInitialState: function() {
+            return {value: 'Hello', selectOption: 'basketball'};
+        },
+        handleChange: function(event) {
+            // 设置状态
+            this.setState({value: event.target.value});
+        },
+        selectChange: function(event) {
+            this.setState({selectOption: event.target.value});
+        },
+
+        render: function() {
+            var value = this.state.value;
+            var selectOption = this.state.selectOption;
+            return (
+                    <div>
+                        <input type="text" value={value} onChange={this.handleChange} />
+                        <p>{value}</p>
+
+                        <select onChange={this.selectChange}>
+                            <option value="basketball">篮球</option>
+                            <option value="football">足球</option>
+                            <option value="pingpangball">乒乓球</option>
+                        </select>
+                        <h3>{selectOption}</h3>
+                    </div>
+            );
+        }
+    });
+
+
+    ReactDOM.render(
+            <Input />,
+            document.getElementById('example')
+    );
+
+</script>
+</body>
+</html>

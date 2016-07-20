@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="./build/react.js"></script>
+    <script src="./build/react-dom.js"></script>
+    <script src="./build/browser.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+<script type="text/babel">
+    // ** Our code goes here! **
+
+    // 自定义一个组件
+    // 组件类的第一个字母必须大写，否则会报错
+    // 组件类只能包含一个顶层标签，否则会报错
+    var HelloMessage = React.createClass({
+        render: function() {
+            return <h1>Hello, {this.max(this.props.num1, this.props.num2)}</h1>;
+        },
+        max: function(num1, num2) {
+            if (num1 > num2) {
+                return num1;
+            } else {
+                return num2;
+            }
+        }
+    });
+
+    // 为组件添加属性时，注意：class属性需要写成className，for属性需要写成htmlFor,这是因为class和for是JavaScript的保留字
+    ReactDOM.render(
+            <HelloMessage num1="3" num2="7" style={style1} />,  // 调用自定义组件
+            document.getElementById('example')
+    );
+
+    var style1 = {
+        backgroundColor: '#00a3ed',
+        fontSize: 18
+    };
+
+</script>
+</body>
+</html>

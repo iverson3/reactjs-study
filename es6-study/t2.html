@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>es6 let const 变量的解构赋值</title>
+</head>
+<body>
+
+<script src="../build/browser.min.js"></script>
+<script type="text/babel">
+    // Your ES6 code
+
+    // let定义的变量只在当前块级作用域中有效 不允许重复定义
+    let i = 10;
+    for (let i = 0; i < 3; i++) {
+        document.writeln(i);
+    }
+    document.writeln(i);
+
+
+
+    // const 定义常量
+    const arr = [];
+    arr.push('stefan', 'www');
+    document.writeln(arr[1]);
+
+    arr.pop('stefan');
+
+//    arr = [];   // 报错
+
+
+    // 一次性赋值(解构赋值)  如果等号的右边不是数组（或者严格地说，不是可遍历的结构），那么将会报错
+    let [x, y, z] = [3, 4, 5];
+    document.writeln(x);
+    document.writeln(y);
+    document.writeln(z);
+
+    // var let const 都可以使用解构赋值
+    const [xx, [[yy], zz]] = [100, [[200], 300]];
+    document.writeln(xx);
+    document.writeln(yy);
+    document.writeln(zz);
+
+    // 可以设置默认值  避免无法赋值
+    var [age = 18] = [];
+    document.writeln(age);
+
+
+    // 遍历Map类型数据
+    var map = new Map();
+    map.set('first', 'aaa');
+    map.set('second', 'bbb');
+
+    for (let [key, value] of map) {
+        document.writeln(key + " is " + value);
+    }
+
+
+    // 解析json数据
+    var jsonData = {
+        id: 42,
+        status: "ok",
+        data: [123, 456]
+    };
+    let {id, status, data: number} = jsonData;
+
+    console.log(id, status, number);
+
+
+</script>
+
+</body>
+</html>

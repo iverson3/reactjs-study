@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>es6转es5</title>
+</head>
+<body>
+
+<script src="../build/browser.min.js"></script>
+<script type="text/babel">
+    // Your ES6 code
+
+    class Person{
+        constructor() {
+
+        }
+        add(a, b) {
+            return a + b;
+        }
+    }
+
+    var me = new Person();
+    var res = me.add(2, 3);
+
+    document.writeln(res);
+
+</script>
+
+</body>
+</html>

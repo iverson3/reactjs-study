@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>es6 字符串的扩展</title>
+</head>
+<body>
+
+<script src="../build/browser.min.js"></script>
+<script type="text/babel">
+    // Your ES6 code
+
+    // 遍历字符串
+    for (let char of "stefan") {
+        document.writeln(char + "<br>");
+    }
+
+
+    var name = "stefan";
+    var res = name.startsWith("ste");   // 以指定字符串开头
+    name.endsWith('an');
+    name.includes('f');
+    document.writeln(res);
+
+</script>
+
+</body>
+</html>

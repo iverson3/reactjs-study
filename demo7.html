@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="./build/react.js"></script>
+    <script src="./build/react-dom.js"></script>
+    <script src="./build/browser.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+<script type="text/babel">
+    // ** Our code goes here! **
+
+    var MyComponent = React.createClass({
+        handleClick: function() {
+            // 获取真实Dom节点对象 通过其ref属性
+            // 输入框获得焦点
+            this.refs.myTextInput.focus();
+
+            // 改变输入框的值
+//            this.refs.myTextInput.value = "stefan-" + this.refs.myTextInput.value;
+
+            // 隐藏输入框
+//            this.refs.myTextInput.hidden = true;
+
+            this.refs.clickButton.value = "Stop click";
+
+        },
+
+        render: function() {
+            return (
+                    <div>
+                        <input type="text" ref="myTextInput"/>
+                        <input type="button" ref="clickButton" value="click me" onClick={this.handleClick}/>
+                    </div>
+            );
+        }
+    });
+
+
+    ReactDOM.render(
+            <MyComponent />,
+            document.getElementById('example')
+    );
+
+</script>
+</body>
+</html>
